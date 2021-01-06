@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	 <meta charset="utf-8">
+	 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	 <!-- CSS only -->
+	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	 <title>Corona Virus Tracker</title>
+</head>
+<body>
+	<div class="container">
+		<h1>Coronavirus Tracker Application</h1>
+		<p>This application lists the current number of cases reported across the globe</p>
+	
+		<div class="jumbotron">
+		    <h1 class="display-4" th:text="${totalReportedCases}"></h1>
+		    <p class="lead">Total cases reported as of today</p>
+		    <hr class="my-4">
+		    <p>
+		        <span>New cases reported since previous day:</span>
+		        <span th:text="${totalNewCases}"></span>
+		    </p>
+		
+		</div>
+		<form th:action="@{/country}" th:object="${virus}" method="post">
+            <div>
+                <input class="form-control" type="text" placeholder="Search by Country Name" th:field="*{country}" aria-label="Search" >
+            </div>
+        </form>
+		<br>
+		<table class="table table-striped">
+		  <thead>
+		    <tr>
+		      <th>State</th>
+		      <th>Country</th>
+		      <th>TotalReportedCase</th>
+		      <th>LatestReportedCase</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="locationStat: ${locationStats}">
+		      <td th:text="${locationStat.state}"></td>
+		      <td th:text="${locationStat.country}"></td>
+		      <td th:text="${locationStat.totalReportedCase}"></td>
+		      <td th:text="${locationStat.latestReportedCase}"></td>
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+</body>
+</html>
