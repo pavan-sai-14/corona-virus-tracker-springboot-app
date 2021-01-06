@@ -33,7 +33,7 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <tr th:object="${locationStat}">
+		    <tr th:each="locationStat: ${locationStats}">
 		      <td th:text="${locationStat.state}"></td>
 		      <td th:text="${locationStat.country}"></td>
 		      <td th:text="${locationStat.totalReportedCase}"></td>

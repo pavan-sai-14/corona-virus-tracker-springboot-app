@@ -1,5 +1,6 @@
 package com.pavanreddy.corona_virus_tracker.controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,20 +44,27 @@ public class HomeController {
 	public String country(@ModelAttribute("virus") LocationStats locationStats,Model model)
 	{
 		int flag=0;
+		List<LocationStats> list=new LinkedList<LocationStats>();
+		int l2=locationStats.getCountry().length();
 		for(LocationStats i :coronaVirusDataService.getAllStats())
 		{
-			if(i.getCountry().equalsIgnoreCase(locationStats.getCountry()))
+			int l1=i.getCountry().length();
+			for(int j=0;j<l1-l2-1;j++)
 			{
-				flag=1;
-				model.addAttribute("locationStat", i);
-				break;
+				if(i.getCountry().substring(j,j+l2).toLowerCase().equalsIgnoreCase(locationStats.getCountry().toLowerCase()))
+				{
+					flag=1;
+					System.out.println(i.getCountry().substring(j,j+l2));
+					list.add(i);
+					break;
+				}
 			}
 		}
 		if(flag==0)
 		{
-			model.addAttribute("locationStat",new LocationStats());
+			model.addAttribute("locationStats",new LocationStats());
 		}
-														
+		model.addAttribute("locationStats",list);										
 		return "country";
 	}
 	
